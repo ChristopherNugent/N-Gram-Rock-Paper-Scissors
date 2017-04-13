@@ -1,5 +1,6 @@
 from Player import Player
-from os import mkdir
+import os
+
 
 def check_win(first, second):
     """Returns 0 if draw, 1 if first wins, 2 if second wins"""
@@ -18,16 +19,20 @@ def get_move():
 
 def main(mem=100):
     name = input('What is your name? --> ')
+    filename = 'Samples/' + name + '.txt'
     player = Player(mem)
+    # Load or create file for player
     try:
-        with open('Samples/' + name + '.txt', 'r') as f:
+        with open(filename, 'r') as f:
+            print(name + "'s data loaded.")
             for line in f:
                 for ch in line:
                     player.add_move(ch)
     except FileNotFoundError:
-        mkdir('Samples')
+        if not os.path.exists('Samples/'):
+            os.mkdir('Samples/')
         with open('Samples/' + name + '.txt', 'w') as f:
-            pass
+            print('Data file created for ' + name)
 
     score = [0, 0]
     user_move = get_move()
