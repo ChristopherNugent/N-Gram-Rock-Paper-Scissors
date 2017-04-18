@@ -17,6 +17,8 @@ class Player:
     def add_move(self, move):
         for i in range(self.memory):
             self.brain.add(self.history[i:], move)
+            if i == len(self.history):
+                break
         self.update_history(move)
 
     def get_move(self):
